@@ -1,0 +1,2 @@
+host_id,recruiter_id,beans,hours_streamed,tier,tier_base_pay_usd,eligible_for_bonus,hit_tier_this_month,host_active_months,bonus_pool_share_usd,host_total_pay_usd,reserved_1,reserved_2,eligible_total_beans
+,,,,,,,,,"=IF(G2<>TRUE,0,IF($N$2=0,0,(C2/$N$2)*INPUTS_MONTH!$B$10))",=F2+J2,,,"=SUMIF(G:G,TRUE,C:C)"

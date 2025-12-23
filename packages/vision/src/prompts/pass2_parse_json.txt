@@ -1,0 +1,1 @@
+Convert the verbatim read into strict JSON schema output.

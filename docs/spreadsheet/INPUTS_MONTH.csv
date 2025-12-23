@@ -1,0 +1,13 @@
+Field,Value
+month,2026-03
+actual_agency_commission_usd,833.33
+host_bonus_pool_percent,0.60
+recruiter_pool_percent,0.07
+sunset_pool_percent,0.15
+total_agency_gross_usd,
+spacer_1,
+spacer_2,
+host_bonus_pool_usd,=B3*B4
+recruiter_pool_usd,=B7*B5
+sunset_pool_usd,=B3*B6
+sunset_pool_active,TRUE

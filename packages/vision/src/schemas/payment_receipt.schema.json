@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "payment_extract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "month",
+    "actual_agency_commission_usd",
+    "total_agency_gross_usd",
+    "host_bonus_pool_percent",
+    "recruiter_pool_percent",
+    "sunset_pool_percent",
+    "sunset_pool_active",
+    "hosts",
+    "recruiters"
+  ],
+  "properties": {
+    "month": {
+      "type": "string",
+      "description": "YYYY-MM"
+    },
+    "actual_agency_commission_usd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "total_agency_gross_usd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "host_bonus_pool_percent": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "recruiter_pool_percent": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "sunset_pool_percent": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "sunset_pool_active": {
+      "type": "boolean"
+    },
+    "hosts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "host_id",
+          "recruiter_id",
+          "beans",
+          "hours_streamed",
+          "tier",
+          "tier_base_pay_usd",
+          "eligible_for_bonus",
+          "hit_tier_this_month",
+          "host_active_months"
+        ],
+        "properties": {
+          "host_id": { "type": "string" },
+          "recruiter_id": { "type": ["string", "null"] },
+          "beans": { "type": "integer", "minimum": 0 },
+          "hours_streamed": { "type": "number", "minimum": 0 },
+          "tier": { "type": "string" },
+          "tier_base_pay_usd": { "type": "number", "minimum": 0 },
+          "eligible_for_bonus": { "type": "boolean" },
+          "hit_tier_this_month": { "type": "boolean" },
+          "host_active_months": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "recruiters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "recruiter_id",
+          "active_hosts_count",
+          "new_qualifying_host_this_month",
+          "legacy_recruiter"
+        ],
+        "properties": {
+          "recruiter_id": { "type": "string" },
+          "active_hosts_count": { "type": "integer", "minimum": 0 },
+          "new_qualifying_host_this_month": { "type": "boolean" },
+          "legacy_recruiter": { "type": "boolean" }
+        }
+      }
+    },
+    "bounty_events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "event_id",
+          "month",
+          "host_id",
+          "recruiter_id",
+          "milestone_code",
+          "amount_usd"
+        ],
+        "properties": {
+          "event_id": { "type": "string" },
+          "month": { "type": "string" },
+          "host_id": { "type": "string" },
+          "recruiter_id": { "type": "string" },
+          "milestone_code": { "type": "string" },
+          "amount_usd": { "type": "number", "minimum": 0 },
+          "note": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}

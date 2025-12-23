@@ -1,0 +1,16 @@
+[project]
+name = "payout-api"
+version = "0.0.0"
+dependencies = [
+  "fastapi",
+  "uvicorn",
+  "httpx",
+  "python-multipart",
+  "jsonschema",
+  "sqlalchemy",
+  "psycopg[binary]",
+  "boto3"
+]
+
+[tool.ruff]
+line-length = 100
