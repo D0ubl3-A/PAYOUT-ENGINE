@@ -1,0 +1,69 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: payout
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+
+  api:
+    build:
+      context: ./services/api
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/payout
+      STORAGE_BACKEND: s3
+      S3_ENDPOINT: http://minio:9000
+      S3_BUCKET: payout
+      S3_ACCESS_KEY: minio
+      S3_SECRET_KEY: minio123
+      S3_REGION: us-east-1
+    depends_on:
+      - postgres
+      - minio
+    ports:
+      - "8000:8000"
+
+  admin-web:
+    build:
+      context: ./apps/admin-web
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+      API_BASE_URL: http://api:8000
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+
+  host-web:
+    build:
+      context: ./apps/host-web
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+      API_BASE_URL: http://api:8000
+    depends_on:
+      - api
+    ports:
+      - "3001:3001"
+
+volumes:
+  postgres_data:
+  minio_data:
